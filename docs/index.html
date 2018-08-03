@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h2>Simple JSON Schema</h2><h1>Array Type</h1><pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;itemClasses&quot;: [{&quot;type&quot;: &quot;string&quot;}]
+    }</code></pre><h1>Any Type</h1><pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;any&quot;
+    }</code></pre><h1>Boolean Type</h1><pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;boolean&quot;
+    }</code></pre><h1>Number Type</h1><pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;number&quot;
+    }</code></pre><h1>String Type</h1><pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;string&quot;
+    }</code></pre><h1>Date Type</h1><pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;date&quot;
+    }</code></pre><h1>Class Type </h1><p>The &quot;vehicle&quot; property is a mixed type property.</p>
+<pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;class&quot;,
+        &quot;name&quot;: &quot;Person&quot;,
+        &quot;extends&quot;:{
+            &quot;class&quot;: &quot;reference&quot;,
+            &quot;name&quot;: &quot;Homosapian&quot;,
+            &quot;version&quot;: &quot;1.0.0&quot;,
+            &quot;package&quot;:&quot;lds&quot;
+        },
+        &quot;label&quot;: &quot;Person&quot;,
+        &quot;description&quot;: &quot;Human&quot;,
+        &quot;version&quot;: &quot;1.0.1&quot;,
+        &quot;decorators&quot;: [{&quot;name&quot;: &quot;person&quot;}],
+        &quot;properties&quot;: [
+            {
+                &quot;class&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;name&quot;: &quot;firstName&quot;,
+                &quot;label&quot;: &quot;First Name&quot;
+            },
+            {
+                &quot;class&quot;: &quot;string&quot;,
+                &quot;name&quot;: &quot;lastName&quot;,
+                &quot;label&quot;: &quot;Last Name&quot;
+            },
+            {
+                &quot;class&quot;: {
+                    &quot;type&quot;: &quot;reference&quot;,
+                    &quot;name&quot;: &quot;Person&quot;,
+                    &quot;package&quot;: &quot;lds&quot;,
+                    &quot;version&quot;: &quot;1.0.1&quot;
+                },
+                &quot;name&quot;: &quot;spouse&quot;,
+                &quot;label&quot;: &quot;Spouse&quot;
+            },
+            {
+                &quot;class&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;embedded&quot;:true,
+                    &quot;itemClasses&quot;:[{
+                        &quot;type&quot;: &quot;reference&quot;,
+                        &quot;name&quot;: &quot;Person&quot;,
+                        &quot;package&quot;:&quot;lds&quot;,
+                        &quot;version&quot;: &quot;1.0.1&quot;
+                    }]
+                },
+                &quot;name&quot;: &quot;children&quot;,
+                &quot;label&quot;: &quot;Children&quot;,
+                &quot;description&quot;: &quot;Young ones.&quot;
+            },
+            { 
+                &quot;class&quot;: [{
+                    &quot;type&quot;: &quot;reference&quot;,
+                    &quot;name&quot;: &quot;Car&quot;,
+                    &quot;package&quot;:&quot;lds&quot;,
+                    &quot;version&quot;: &quot;1.0.0&quot;
+                },
+                {
+                    &quot;type&quot;: &quot;reference&quot;,
+                    &quot;name&quot;: &quot;Truck&quot;,
+                    &quot;package&quot;:&quot;lds&quot;,
+                    &quot;version&quot;: &quot;2.0.4&quot;
+                }],
+                &quot;name&quot;: &quot;vehicle&quot;,
+                &quot;label&quot;: &quot;Vehicle&quot;
+            },
+            {
+                &quot;class&quot;: &quot;string&quot;,
+                &quot;name&quot;: &quot;email&quot;,
+                &quot;decorators&quot;:[{
+                    &quot;name&quot;: &quot;email&quot;,
+                    &quot;config&quot;: {
+                        &quot;validHosts&quot;: [&quot;gmail&quot;, &quot;yahoo&quot;]
+                    }
+                }]
+            }
+        ]
+    }</code></pre><h1>Reference Type</h1><pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;reference&quot;,
+        &quot;name&quot;: &quot;Person&quot;,
+        &quot;version&quot;: &quot;1.0.1&quot;
+    }</code></pre><h1>Value Type</h1><p>Value Long Hand</p>
+<pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;value&quot;,
+        &quot;class&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;value&quot;: &quot;Text&quot;
+    }</code></pre><p>Value Short Hand</p>
+<pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;value&quot;,
+        &quot;class&quot;: &quot;string&quot;,
+        &quot;value&quot;: &quot;Text&quot;
+    }</code></pre><p>Class</p>
+<pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;value&quot;,
+        &quot;class&quot;: {
+            &quot;type&quot;: &quot;reference&quot;,
+            &quot;name&quot;: &quot;Person&quot;,
+            &quot;version&quot;: &quot;1.0.1&quot;
+        },
+        &quot;value&quot;: {
+            &quot;firstName&quot;: &quot;John&quot;,
+            &quot;lastName&quot;: &quot;Doe&quot;
+        }
+    }</code></pre><h1>Enum Type</h1><pre class="prettyprint source lang-json"><code>    {
+        &quot;type&quot;: &quot;enum&quot;,
+        &quot;options&quot;: [
+            {
+                &quot;class&quot;: { 
+                    &quot;type&quot;: &quot;string&quot; 
+                },
+                &quot;name&quot;: &quot;STRING&quot;,
+                &quot;label&quot;: &quot;String&quot;,
+                &quot;value&quot;: &quot;This is a String&quot;
+            },
+            {
+                &quot;class&quot;: &quot;number&quot;,
+                &quot;name&quot;: &quot;NUMBER&quot;,
+                &quot;label&quot;: &quot;Number&quot;,
+                &quot;value&quot;: 1
+            },
+            {
+                &quot;class&quot;: {
+                    &quot;type&quot;: &quot;reference&quot;,
+                    &quot;name&quot;: &quot;Person&quot;,
+                    &quot;version&quot;: &quot;1.0.1&quot;
+                },
+                &quot;name&quot;: &quot;PERSON&quot;,
+                &quot;label&quot;: &quot;Person&quot;,
+                &quot;value&quot;: {
+                    &quot;firstName&quot;: &quot;John&quot;,
+                    &quot;lastName&quot;: &quot;Doe&quot;
+                }
+            }
+        ]
+    }</code></pre><h1>Workflows</h1><pre class="prettyprint source lang-json"><code>{
+    &quot;type&quot;: &quot;workflow&quot;,
+    &quot;name&quot;: &quot;development&quot;,
+    &quot;label&quot;: &quot;Development&quot;,
+    &quot;states&quot;: [
+        {
+            &quot;name&quot;: &quot;backlog&quot;,
+            &quot;label&quot;: &quot;Back Log&quot;,
+            &quot;options&quot;: [
+                &quot;inprogress&quot;
+            ],
+            &quot;permissions&quot;: [&quot;roleName&quot;]
+        },
+        {
+            &quot;name&quot;: &quot;inprogress&quot;,
+            &quot;label&quot;: &quot;In Progress&quot;,
+            &quot;options&quot;: [
+                &quot;qa&quot;,
+                &quot;backlog&quot;
+            ],
+            &quot;permissions&quot;:[]
+        },
+        {
+            &quot;name&quot;: &quot;qa&quot;,
+            &quot;label&quot;: &quot;QA&quot;,
+            &quot;options&quot;: [
+                &quot;publish&quot;,
+                &quot;inprogress&quot;
+            ],
+            &quot;permissions&quot;:[]
+        },
+        {
+            &quot;name&quot;: &quot;publish&quot;,
+            &quot;label&quot;: &quot;Publish&quot;,
+            &quot;options&quot;: [
+                &quot;qa&quot;,
+                &quot;inprogress&quot;
+            ],
+            &quot;permissions&quot;: []
+        }
+    ]
+}</code></pre><h1>Service Actions &amp; Workflows Linking</h1><pre class="prettyprint source lang-json"><code>{
+    {
+        &quot;type&quot;: &quot;workflow-action&quot;,
+        &quot;workflow&quot;: {
+            &quot;name&quot;: &quot;development&quot;,
+            &quot;state&quot;: &quot;inprogress&quot;
+        },
+        &quot;service&quot;:{
+            &quot;name&quot;: &quot;translation&quot;,
+            &quot;action&quot;: {
+                &quot;name&quot;: &quot;translate&quot;,
+                &quot;label&quot;: &quot;Translate&quot;
+            }
+        }
+    }
+}</code></pre><h1>Registered Service</h1><pre class="prettyprint source lang-json"><code>{
+    &quot;type&quot;:&quot;service&quot;,
+    &quot;name&quot;:&quot;translation&quot;,
+    &quot;url&quot;: &quot;https://translation.lds.org/&quot;,
+    &quot;functions&quot;: [
+        {
+            &quot;name&quot;: &quot;translate&quot;,
+            &quot;config&quot;: [
+                {
+                    &quot;class&quot;:&quot;string&quot;,
+                    &quot;name&quot;: &quot;message&quot;,
+                    &quot;label&quot;: &quot;Message&quot;
+                }
+            ]
+        }
+    ],
+    &quot;events&quot;: [&quot;assetAdded&quot;, &quot;assetRemoved&quot;, &quot;assetUpdated&quot;]
+}</code></pre><h1>Functions</h1><p>Functions are ways to communicate with services, and receive responses. Services can also send statuses based on the functions invocation guids. This will be useful for many reasons. The service is sent a lock guid on the function call. If the service returns lock equal to true, then the asset will be locked until the function returns its value. Function guids are also used to make changes to the document. This is the only way to make changes is if you have the lock id.</p>
+<p>Function invocation</p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;id&quot;:&quot;ef99ls-s99ddk-sk239&quot;,
+    &quot;name&quot;: &quot;translate&quot;,
+    &quot;arguments&quot;: [
+        {
+            &quot;message&quot;:&quot;Please translate this!&quot;
+        }
+    ],
+    &quot;asset&quot;: {
+        &quot;id&quot;: &quot;43dd-44-9852k-3423432&quot;,
+        &quot;lockId&quot;:&quot;443l-dlsdk-3lk3l-laekd&quot;,
+        &quot;type&quot;: &quot;content&quot;
+    }
+}</code></pre><p>When registering a service the cms will return a guid so that the service can update its status, functions, and unregister. The only other place that services can be forgotten is with an admin. </p>
+<p>Retrieve an asset.</p>
+<pre class="prettyprint source"><code>/asset/content/guid RUD
+
+/asset/content/type/version/ query and page content.
+/asset/content/type/version/guid/collectionName query nested collection
+/asset/content/type/version/guid/propertyObject
+
+/asset/image/guid CRUD
+/asset/audio/guid CRUD
+/asset/video/guid CRUD
+/asset/pdf/guid CRUD // Extend type if needed
+
+/asset/guid  // This will send the source of any file content or file.
+
+/model CRUD  NOTE: Maybe categorize models.
+/workflow CRUD
+
+/function/invoke 
+/function/response // Send response ok and errors here with invocation id.
+/service/register
+/service/unregister
+
+/activity returns your activity on the CMS.</code></pre><p>All Assets need to have a revision number on them so when services update the asset they need to have the most recent version.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Aug 01 2018 23:09:52 GMT-0600 (MDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
