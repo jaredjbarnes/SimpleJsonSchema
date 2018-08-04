@@ -16,22 +16,35 @@ exports["schema.Validate: Invalid environment."] = () => {
 }
 
 exports["schema.Validate: Invalid schema."] = () => {
-    const validator = new Validator(new Environment());
-    validator.validateAsync(null, {}).then((result)=>{
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: null,
+        value: {}
+    });
+
+    validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     });
 }
 
 exports["schema.Validate: String (Long Hand)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: { type: "string" },
+        value: "String"
+    });
 
-    return validator.validateAsync({ type: "string" }, "String").then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }
 
 exports["schema.Validate: String (Short Hand)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: "string",
+        value: "String"
+    });
 
     return validator.validateAsync("string", "String").then((result) => {
         assert.equal(result, true);
@@ -39,9 +52,13 @@ exports["schema.Validate: String (Short Hand)."] = () => {
 }
 
 exports["schema.Validate: String (Bad Value)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: "string",
+        value: 0
+    });
 
-    return validator.validateAsync("string", 0).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected a string.");
@@ -49,25 +66,41 @@ exports["schema.Validate: String (Bad Value)."] = () => {
 }
 
 exports["schema.Validate: Date (Long Hand)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: "date",
+        value: JSON.parse(JSON.stringify(new Date()))
+    });
 
-    return validator.validateAsync("date", JSON.parse(JSON.stringify(new Date()))).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }
 
 exports["schema.Validate: Date (Short Hand)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: {
+            type: "date"
+        },
+        value: JSON.parse(JSON.stringify(new Date()))
+    });
 
-    return validator.validateAsync("date", JSON.parse(JSON.stringify(new Date()))).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }
 
 exports["schema.Validate: Date (Bad Value)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: {
+            type: "date"
+        },
+        value: ""
+    });
 
-    return validator.validateAsync("date", "").then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected a date.");

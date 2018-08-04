@@ -123,7 +123,7 @@ The "vehicle" property is a mixed type property.
                 "class": "string",
                 "name": "email",
                 "decorators":[{
-                    "name": "email",
+                    "name": "rich-text",
                     "config": {
                         "validHosts": ["gmail", "yahoo"]
                     }
@@ -165,7 +165,7 @@ Value Short Hand
     }
 ```
 
-Class
+Value Complex Type
 ```json
     {
         "type": "value",
@@ -296,7 +296,7 @@ Registered Service
     "type":"service",
     "name":"translation",
     "url": "https://translation.lds.org/",
-    "functions": [
+    "actions": [
         {
             "name": "translate",
             "config": [
@@ -312,9 +312,9 @@ Registered Service
 }
 ```
 
-Functions
+Actions
 ===
-Functions are ways to communicate with services, and receive responses. Services can also send statuses based on the functions invocation guids. This will be useful for many reasons. The service is sent a lock guid on the function call. If the service returns lock equal to true, then the asset will be locked until the function returns its value. Function guids are also used to make changes to the document. This is the only way to make changes is if you have the lock id.
+Actions are ways to communicate with services, and receive responses. Services can also send statuses based on the action invocation guids. This will be useful for many reasons. The service is sent a lock guid on the function call. If the service returns lock equal to true, then the asset will be locked until the function returns its value. Function guids are also used to make changes to the document. This is the only way to make changes is if you have the lock id.
 
 Function invocation
 
