@@ -1,5 +1,5 @@
 import Any from "./Any";
-import Array from "./Array";
+import ArrayType from "./Array";
 import Boolean from "./Boolean";
 import Date from "./Date";
 import Enum from "./Enum";
@@ -10,7 +10,7 @@ import Value from "./Value";
 
 const types = {
     "any": Any,
-    "array": Array,
+    "array": ArrayType,
     "boolean": Boolean,
     "class": Class,
     "date": Date,
@@ -161,7 +161,7 @@ export default class Class {
                     this.assertDecorator(decorator);
                 });
 
-                for (const decoratorInformation of property.decorators) {
+                for (const decoratorInformation of schema.decorators) {
                     const decorator = await this.environment.getDecoratorAsync(decoratorInformation);
                     decorators.push(decorator);
                 }
@@ -176,6 +176,8 @@ export default class Class {
             }
 
         }
+
+        return true;
 
     }
 

@@ -5,6 +5,13 @@ export default class Enviroment {
         };
     }
 
-    getDecoratorAsync() { }
+    getDecoratorAsync() {
+        return {
+            validateAsync() {
+                return true;
+            }
+        }
+    }
+
     getReferenceAsync() { }
 }

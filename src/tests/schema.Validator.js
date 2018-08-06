@@ -68,7 +68,9 @@ exports["schema.Validate: String (Bad Value)."] = () => {
 exports["schema.Validate: Date (Long Hand)."] = () => {
     const validator = new Validator({
         environment: new Environment(),
-        schema: "date",
+        schema: {
+            type: "date"
+        },
         value: JSON.parse(JSON.stringify(new Date()))
     });
 
@@ -80,9 +82,7 @@ exports["schema.Validate: Date (Long Hand)."] = () => {
 exports["schema.Validate: Date (Short Hand)."] = () => {
     const validator = new Validator({
         environment: new Environment(),
-        schema: {
-            type: "date"
-        },
+        schema: "date",
         value: JSON.parse(JSON.stringify(new Date()))
     });
 
@@ -108,25 +108,39 @@ exports["schema.Validate: Date (Bad Value)."] = () => {
 }
 
 exports["schema.Validate: Boolean (Long Hand)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: {
+            type: "boolean"
+        },
+        value: false
+    });
 
-    return validator.validateAsync("boolean", false).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }
 
 exports["schema.Validate: Boolean (Short Hand)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: "boolean",
+        value: true
+    });
 
-    return validator.validateAsync("boolean", true).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }
 
 exports["schema.Validate: Boolean (Bad Value)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: "boolean",
+        value: ""
+    });
 
-    return validator.validateAsync("boolean", "").then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected a boolean.");
@@ -134,25 +148,39 @@ exports["schema.Validate: Boolean (Bad Value)."] = () => {
 }
 
 exports["schema.Validate: Number (Long Hand)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: {
+            type: "number"
+        },
+        value: 2
+    });
 
-    return validator.validateAsync("number", 2).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }
 
 exports["schema.Validate: Number (Short Hand)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: "number",
+        value: 1
+    });
 
-    return validator.validateAsync("number", 1).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }
 
 exports["schema.Validate: Number (Bad Value)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: "number",
+        value: ""
+    });
 
-    return validator.validateAsync("number", "").then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected a number.");
@@ -160,33 +188,46 @@ exports["schema.Validate: Number (Bad Value)."] = () => {
 }
 
 exports["schema.Validate: Any (Long Hand)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: {
+            type: "any"
+        },
+        value: {}
+    });
 
-    return validator.validateAsync("any", 2).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }
 
 exports["schema.Validate: Any (Short Hand)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: "any",
+        value: {}
+    });
 
-    return validator.validateAsync("any", {}).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }
 
 exports["schema.Validate: Any (Bad Value)."] = () => {
-    const validator = new Validator(new Environment());
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: "any",
+        value: undefined
+    });
 
-    return validator.validateAsync("any", undefined).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
-        assert.equal(error.message, "Type any cannot be undefined.");
+        assert.equal(error.message, `Type "any" cannot be undefined.`);
     });
 }
 
 exports["schema.Validate: Class."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person",
@@ -205,14 +246,19 @@ exports["schema.Validate: Class."] = () => {
     const object = {
         firstName: "John"
     };
+    
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
 
-    return validator.validateAsync(model, object).then((result) => {
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }
 
 exports["schema.Validate: Class with no name."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class"
     };
@@ -221,7 +267,13 @@ exports["schema.Validate: Class with no name."] = () => {
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected the name of a class to be a string.");
@@ -229,7 +281,6 @@ exports["schema.Validate: Class with no name."] = () => {
 }
 
 exports["schema.Validate: Class with no label."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person"
@@ -239,7 +290,13 @@ exports["schema.Validate: Class with no label."] = () => {
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected the label of a class to be a string.");
@@ -247,7 +304,6 @@ exports["schema.Validate: Class with no label."] = () => {
 }
 
 exports["schema.Validate: Class with no description."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person",
@@ -258,7 +314,13 @@ exports["schema.Validate: Class with no description."] = () => {
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected the description of a class to be a string.");
@@ -266,7 +328,6 @@ exports["schema.Validate: Class with no description."] = () => {
 }
 
 exports["schema.Validate: Class with no version."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person",
@@ -278,7 +339,13 @@ exports["schema.Validate: Class with no version."] = () => {
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected the version of a class to be a string.");
@@ -286,7 +353,6 @@ exports["schema.Validate: Class with no version."] = () => {
 }
 
 exports["schema.Validate: Class with invalid decorators property."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person",
@@ -300,7 +366,13 @@ exports["schema.Validate: Class with invalid decorators property."] = () => {
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected the decorators of a class to be an array.");
@@ -308,7 +380,6 @@ exports["schema.Validate: Class with invalid decorators property."] = () => {
 }
 
 exports["schema.Validate: Class with invalid decorator (null)."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person",
@@ -325,7 +396,13 @@ exports["schema.Validate: Class with invalid decorator (null)."] = () => {
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected the decorator to be an object.");
@@ -333,7 +410,6 @@ exports["schema.Validate: Class with invalid decorator (null)."] = () => {
 }
 
 exports["schema.Validate: Class with invalid decorator (no name)."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person",
@@ -350,7 +426,13 @@ exports["schema.Validate: Class with invalid decorator (no name)."] = () => {
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected the decorator's name property to be a string.");
@@ -358,7 +440,6 @@ exports["schema.Validate: Class with invalid decorator (no name)."] = () => {
 }
 
 exports["schema.Validate: Class with invalid properties."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person",
@@ -372,7 +453,13 @@ exports["schema.Validate: Class with invalid properties."] = () => {
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected the properties to be an array.");
@@ -380,7 +467,6 @@ exports["schema.Validate: Class with invalid properties."] = () => {
 }
 
 exports["schema.Validate: Class with invalid decorator (invalid name)."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person",
@@ -399,7 +485,13 @@ exports["schema.Validate: Class with invalid decorator (invalid name)."] = () =>
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected the decorator's name property to be a string.");
@@ -407,7 +499,6 @@ exports["schema.Validate: Class with invalid decorator (invalid name)."] = () =>
 }
 
 exports["schema.Validate: Class with invalid decorator (invalid config)."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person",
@@ -427,7 +518,13 @@ exports["schema.Validate: Class with invalid decorator (invalid config)."] = () 
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.fail(result, false, "Unexpected result", "=");
     }).catch((error) => {
         assert.equal(error.message, "Expected the decorator's config property to be an object.");
@@ -435,7 +532,6 @@ exports["schema.Validate: Class with invalid decorator (invalid config)."] = () 
 }
 
 exports["schema.Validate: Class with valid decorator."] = () => {
-    const validator = new Validator(new Environment());
     const model = {
         type: "class",
         name: "Person",
@@ -455,7 +551,13 @@ exports["schema.Validate: Class with valid decorator."] = () => {
         firstName: "John"
     };
 
-    return validator.validateAsync(model, object).then((result) => {
+    const validator = new Validator({
+        environment: new Environment(),
+        schema: model,
+        value: object
+    });
+
+    return validator.validateAsync().then((result) => {
         assert.equal(result, true);
     });
 }

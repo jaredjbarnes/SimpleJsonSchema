@@ -1,9 +1,8 @@
-export default class Any {
-    constructor({ environment, schema, value }) {
-        this.type = "any";
-        this.environment = environment;
-        this.schema = schema;
-        this.value = value;
+import Primitive from "./Primitive";
+
+export default class Any extends Primitive {
+    constructor({ ...args }) {
+        super({ type: "any", ...args });
     }
 
     async validateAsync() {

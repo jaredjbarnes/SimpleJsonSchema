@@ -1,0 +1,1817 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for schema/types/Class.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">schema/types/</a> Class.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">17.19% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>55/320</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">6.29% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>11/175</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">27.27% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>9/33</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">13.64% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>39/286</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+&nbsp;
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+&nbsp;
+var _typeof = typeof Symbol === "function" &amp;&amp; typeof Symbol.iterator === "symbol" ? <span class="fstat-no" title="function not covered" >function (obj) {</span> <span class="cstat-no" title="statement not covered" >return typeof obj; </span>} : <span class="fstat-no" title="function not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >function (obj) {</span> <span class="cstat-no" title="statement not covered" >return obj &amp;&amp; typeof Symbol === "function" &amp;&amp; obj.constructor === Symbol &amp;&amp; obj !== Symbol.prototype ? "symbol" : typeof obj; </span>};</span>
+&nbsp;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken" >E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="if path not taken" >I</span>if (staticProps) <span class="cstat-no" title="statement not covered" >defineProperties(Constructor, staticProps); </span>return Constructor; }; }();
+&nbsp;
+var _Any = require("./Any");
+&nbsp;
+var _Any2 = _interopRequireDefault(_Any);
+&nbsp;
+var _Array = require("./Array");
+&nbsp;
+var _Array2 = _interopRequireDefault(_Array);
+&nbsp;
+var _Boolean = require("./Boolean");
+&nbsp;
+var _Boolean2 = _interopRequireDefault(_Boolean);
+&nbsp;
+var _Date = require("./Date");
+&nbsp;
+var _Date2 = _interopRequireDefault(_Date);
+&nbsp;
+var _Enum = require("./Enum");
+&nbsp;
+var _Enum2 = _interopRequireDefault(_Enum);
+&nbsp;
+var _Number = require("./Number");
+&nbsp;
+var _Number2 = _interopRequireDefault(_Number);
+&nbsp;
+var _Reference = require("./Reference");
+&nbsp;
+var _Reference2 = _interopRequireDefault(_Reference);
+&nbsp;
+var _String = require("./String");
+&nbsp;
+var _String2 = _interopRequireDefault(_String);
+&nbsp;
+var _Value = require("./Value");
+&nbsp;
+var _Value2 = _interopRequireDefault(_Value);
+&nbsp;
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : <span class="branch-1 cbranch-no" title="branch not covered" >{ default: obj };</span> }
+&nbsp;
+function _asyncToGenerator(fn) { return <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >var gen = fn.apply(this, arguments); <span class="cstat-no" title="statement not covered" ></span>return new Promise(<span class="fstat-no" title="function not covered" >function (resolve, reject) {</span> <span class="fstat-no" title="function not covered" >function step(key, arg) {</span> <span class="cstat-no" title="statement not covered" >try { <span class="cstat-no" title="statement not covered" >var info = gen[key](arg); <span class="cstat-no" title="statement not covered" ></span>var value = info.value; </span>} catch (error) { <span class="cstat-no" title="statement not covered" >reject(error); <span class="cstat-no" title="statement not covered" ></span>return; </span>} <span class="cstat-no" title="statement not covered" ></span>if (info.done) { <span class="cstat-no" title="statement not covered" >resolve(value); </span>} else { <span class="cstat-no" title="statement not covered" >return Promise.resolve(value).then(<span class="fstat-no" title="function not covered" >function (value) {</span> <span class="cstat-no" title="statement not covered" >step("next", value); </span>}, <span class="fstat-no" title="function not covered" >function (err) {</span> <span class="cstat-no" title="statement not covered" >step("throw", err); </span>}); </span>} </span>} <span class="cstat-no" title="statement not covered" >return step("next"); </span>}); </span>}; }
+&nbsp;
+<span class="fstat-no" title="function not covered" >function _classCallCheck(instance, Constructor) {</span> <span class="cstat-no" title="statement not covered" >if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered" >throw new TypeError("Cannot call a class as a function"); </span>} </span>}
+&nbsp;
+var types = {
+    "any": _Any2.default,
+    "array": _Array2.default,
+    "boolean": _Boolean2.default,
+    "class": Class,
+    "date": _Date2.default,
+    "enum": _Enum2.default,
+    "number": _Number2.default,
+    "reference": _Reference2.default,
+    "string": _String2.default,
+    "value": _Value2.default
+};
+&nbsp;
+var Class = function () {
+<span class="fstat-no" title="function not covered" >    function Class(_ref) {</span>
+<span class="cstat-no" title="statement not covered" >        var environment = _ref.environment,</span>
+            schema = _ref.schema,
+            value = _ref.value;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        _classCallCheck(this, Class);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.type = "class";</span>
+<span class="cstat-no" title="statement not covered" >        this.environment = environment;</span>
+<span class="cstat-no" title="statement not covered" >        this.schema = schema;</span>
+<span class="cstat-no" title="statement not covered" >        this.value = value;</span>
+    }
+&nbsp;
+    _createClass(Class, [{
+        key: "assertDecorator",
+        value: <span class="fstat-no" title="function not covered" >function assertDecorator(decorator) {</span>
+<span class="cstat-no" title="statement not covered" >            if (decorator == null) {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the decorator to be an object.");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (typeof decorator.name !== "string") {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the decorator's name property to be a string.");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (decorator.config == null || decorator.config != null &amp;&amp; (typeof decorator === "undefined" ? "undefined" : _typeof(decorator)) !== "object") {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the decorator's config property to be an object.");</span>
+            }
+        }
+    }, {
+        key: "assertPropertyAsync",
+        value: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(<span class="fstat-no" title="function not covered" >function _callee(property) {</span>
+<span class="cstat-no" title="statement not covered" >                var _this = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var decorators, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, decoratorInformation, decorator, propertySchema, propertyValue, Validator, propertyValidator, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _decorator;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return regeneratorRuntime.wrap(<span class="fstat-no" title="function not covered" >function _callee$(_context) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    while (1) {</span>
+<span class="cstat-no" title="statement not covered" >                        switch (_context.prev = _context.next) {</span>
+                            case 0:
+<span class="cstat-no" title="statement not covered" >                                decorators = [];</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                this.assertPropertySchema(property);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_Array2.default.isArray(property.decorators)) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context.next = 32;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                property.decorators.forEach(<span class="fstat-no" title="function not covered" >function (decorator) {</span></span>
+<span class="cstat-no" title="statement not covered" >                                    _this.assertDecorator(decorator);</span>
+                                });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                _iteratorNormalCompletion = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _didIteratorError = false;</span>
+<span class="cstat-no" title="statement not covered" >                                _iteratorError = undefined;</span>
+<span class="cstat-no" title="statement not covered" >                                _context.prev = 7;</span>
+<span class="cstat-no" title="statement not covered" >                                _iterator = property.decorators[Symbol.iterator]();</span>
+&nbsp;
+                            case 9:
+<span class="cstat-no" title="statement not covered" >                                if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context.next = 18;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                decoratorInformation = _step.value;</span>
+<span class="cstat-no" title="statement not covered" >                                _context.next = 13;</span>
+<span class="cstat-no" title="statement not covered" >                                return this.environment.getDecoratorAsync(decoratorInformation);</span>
+&nbsp;
+                            case 13:
+<span class="cstat-no" title="statement not covered" >                                decorator = _context.sent;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                decorators.push(decorator);</span>
+&nbsp;
+                            case 15:
+<span class="cstat-no" title="statement not covered" >                                _iteratorNormalCompletion = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _context.next = 9;</span>
+<span class="cstat-no" title="statement not covered" >                                break;</span>
+&nbsp;
+                            case 18:
+<span class="cstat-no" title="statement not covered" >                                _context.next = 24;</span>
+<span class="cstat-no" title="statement not covered" >                                break;</span>
+&nbsp;
+                            case 20:
+<span class="cstat-no" title="statement not covered" >                                _context.prev = 20;</span>
+<span class="cstat-no" title="statement not covered" >                                _context.t0 = _context["catch"](7);</span>
+<span class="cstat-no" title="statement not covered" >                                _didIteratorError = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _iteratorError = _context.t0;</span>
+&nbsp;
+                            case 24:
+<span class="cstat-no" title="statement not covered" >                                _context.prev = 24;</span>
+<span class="cstat-no" title="statement not covered" >                                _context.prev = 25;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_iteratorNormalCompletion &amp;&amp; _iterator.return) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _iterator.return();</span>
+                                }
+&nbsp;
+                            case 27:
+<span class="cstat-no" title="statement not covered" >                                _context.prev = 27;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_didIteratorError) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context.next = 30;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                throw _iteratorError;</span>
+&nbsp;
+                            case 30:
+<span class="cstat-no" title="statement not covered" >                                return _context.finish(27);</span>
+&nbsp;
+                            case 31:
+<span class="cstat-no" title="statement not covered" >                                return _context.finish(24);</span>
+&nbsp;
+                            case 32:
+<span class="cstat-no" title="statement not covered" >                                propertySchema = property.class;</span>
+<span class="cstat-no" title="statement not covered" >                                propertyValue = this.value[property.name];</span>
+<span class="cstat-no" title="statement not covered" >                                Validator = this.getValidatorBySchema(property.class);</span>
+<span class="cstat-no" title="statement not covered" >                                propertyValidator = new Validator({</span>
+                                    environment: this.environment,
+                                    schema: propertySchema,
+                                    value: propertyValue
+                                });
+<span class="cstat-no" title="statement not covered" >                                _context.next = 38;</span>
+<span class="cstat-no" title="statement not covered" >                                return propertyValidator.validateAsync();</span>
+&nbsp;
+                            case 38:
+<span class="cstat-no" title="statement not covered" >                                _iteratorNormalCompletion2 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _didIteratorError2 = false;</span>
+<span class="cstat-no" title="statement not covered" >                                _iteratorError2 = undefined;</span>
+<span class="cstat-no" title="statement not covered" >                                _context.prev = 41;</span>
+<span class="cstat-no" title="statement not covered" >                                _iterator2 = decorators[Symbol.iterator]();</span>
+&nbsp;
+                            case 43:
+<span class="cstat-no" title="statement not covered" >                                if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context.next = 50;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                _decorator = _step2.value;</span>
+<span class="cstat-no" title="statement not covered" >                                _context.next = 47;</span>
+<span class="cstat-no" title="statement not covered" >                                return _decorator.validateAsync({</span>
+                                    schema: propertySchema,
+                                    value: propertyValue
+                                });
+&nbsp;
+                            case 47:
+<span class="cstat-no" title="statement not covered" >                                _iteratorNormalCompletion2 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _context.next = 43;</span>
+<span class="cstat-no" title="statement not covered" >                                break;</span>
+&nbsp;
+                            case 50:
+<span class="cstat-no" title="statement not covered" >                                _context.next = 56;</span>
+<span class="cstat-no" title="statement not covered" >                                break;</span>
+&nbsp;
+                            case 52:
+<span class="cstat-no" title="statement not covered" >                                _context.prev = 52;</span>
+<span class="cstat-no" title="statement not covered" >                                _context.t1 = _context["catch"](41);</span>
+<span class="cstat-no" title="statement not covered" >                                _didIteratorError2 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _iteratorError2 = _context.t1;</span>
+&nbsp;
+                            case 56:
+<span class="cstat-no" title="statement not covered" >                                _context.prev = 56;</span>
+<span class="cstat-no" title="statement not covered" >                                _context.prev = 57;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_iteratorNormalCompletion2 &amp;&amp; _iterator2.return) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _iterator2.return();</span>
+                                }
+&nbsp;
+                            case 59:
+<span class="cstat-no" title="statement not covered" >                                _context.prev = 59;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_didIteratorError2) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context.next = 62;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                throw _iteratorError2;</span>
+&nbsp;
+                            case 62:
+<span class="cstat-no" title="statement not covered" >                                return _context.finish(59);</span>
+&nbsp;
+                            case 63:
+<span class="cstat-no" title="statement not covered" >                                return _context.finish(56);</span>
+&nbsp;
+                            case 64:
+                            case "end":
+<span class="cstat-no" title="statement not covered" >                                return _context.stop();</span>
+                        }
+                    }
+                }, _callee, this, [[7, 20, 24, 32], [25,, 27, 31], [41, 52, 56, 64], [57,, 59, 63]]);
+            }));
+&nbsp;
+<span class="fstat-no" title="function not covered" >            function assertPropertyAsync(_x) {</span>
+<span class="cstat-no" title="statement not covered" >                return _ref2.apply(this, arguments);</span>
+            }
+&nbsp;
+            return assertPropertyAsync;
+        }()
+    }, {
+        key: "assertPropertiesAsync",
+        value: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(<span class="fstat-no" title="function not covered" >function _callee2() {</span>
+<span class="cstat-no" title="statement not covered" >                var schema, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, _property;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return regeneratorRuntime.wrap(<span class="fstat-no" title="function not covered" >function _callee2$(_context2) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    while (1) {</span>
+<span class="cstat-no" title="statement not covered" >                        switch (_context2.prev = _context2.next) {</span>
+                            case 0:
+<span class="cstat-no" title="statement not covered" >                                schema = this.schema;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (_Array2.default.isArray(schema.properties)) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context2.next = 3;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                throw new Error("Expected the properties to be an array.");</span>
+&nbsp;
+                            case 3:
+<span class="cstat-no" title="statement not covered" >                                _iteratorNormalCompletion3 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _didIteratorError3 = false;</span>
+<span class="cstat-no" title="statement not covered" >                                _iteratorError3 = undefined;</span>
+<span class="cstat-no" title="statement not covered" >                                _context2.prev = 6;</span>
+<span class="cstat-no" title="statement not covered" >                                _iterator3 = schema.properties[Symbol.iterator]();</span>
+&nbsp;
+                            case 8:
+<span class="cstat-no" title="statement not covered" >                                if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context2.next = 15;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                _property = _step3.value;</span>
+<span class="cstat-no" title="statement not covered" >                                _context2.next = 12;</span>
+<span class="cstat-no" title="statement not covered" >                                return this.assertPropertyAsync(_property);</span>
+&nbsp;
+                            case 12:
+<span class="cstat-no" title="statement not covered" >                                _iteratorNormalCompletion3 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _context2.next = 8;</span>
+<span class="cstat-no" title="statement not covered" >                                break;</span>
+&nbsp;
+                            case 15:
+<span class="cstat-no" title="statement not covered" >                                _context2.next = 21;</span>
+<span class="cstat-no" title="statement not covered" >                                break;</span>
+&nbsp;
+                            case 17:
+<span class="cstat-no" title="statement not covered" >                                _context2.prev = 17;</span>
+<span class="cstat-no" title="statement not covered" >                                _context2.t0 = _context2["catch"](6);</span>
+<span class="cstat-no" title="statement not covered" >                                _didIteratorError3 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _iteratorError3 = _context2.t0;</span>
+&nbsp;
+                            case 21:
+<span class="cstat-no" title="statement not covered" >                                _context2.prev = 21;</span>
+<span class="cstat-no" title="statement not covered" >                                _context2.prev = 22;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_iteratorNormalCompletion3 &amp;&amp; _iterator3.return) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _iterator3.return();</span>
+                                }
+&nbsp;
+                            case 24:
+<span class="cstat-no" title="statement not covered" >                                _context2.prev = 24;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_didIteratorError3) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context2.next = 27;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                throw _iteratorError3;</span>
+&nbsp;
+                            case 27:
+<span class="cstat-no" title="statement not covered" >                                return _context2.finish(24);</span>
+&nbsp;
+                            case 28:
+<span class="cstat-no" title="statement not covered" >                                return _context2.finish(21);</span>
+&nbsp;
+                            case 29:
+                            case "end":
+<span class="cstat-no" title="statement not covered" >                                return _context2.stop();</span>
+                        }
+                    }
+                }, _callee2, this, [[6, 17, 21, 29], [22,, 24, 28]]);
+            }));
+&nbsp;
+<span class="fstat-no" title="function not covered" >            function assertPropertiesAsync() {</span>
+<span class="cstat-no" title="statement not covered" >                return _ref3.apply(this, arguments);</span>
+            }
+&nbsp;
+            return assertPropertiesAsync;
+        }()
+    }, {
+        key: "assertPropertySchema",
+        value: <span class="fstat-no" title="function not covered" >function assertPropertySchema(property) {</span>
+<span class="cstat-no" title="statement not covered" >            if (typeof property.name !== "string") {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the name of a property to be a string.");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (typeof property.class !== "string" &amp;&amp; property.class != null &amp;&amp; _typeof(property.class) === "object" &amp;&amp; typeof property.class.type !== "string") {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the class of a property to be a string, or an object with the type property being a string.");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (typeof property.label !== "string") {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the label of a property to be a string.");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (property.decorators != null &amp;&amp; !_Array2.default.isArray(property.decorators)) {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the decorators on the \"" + property.name + "\" property to be an Array.");</span>
+            }
+        }
+    }, {
+        key: "assertSchema",
+        value: <span class="fstat-no" title="function not covered" >function assertSchema() {</span>
+<span class="cstat-no" title="statement not covered" >            var schema = this.schema;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (typeof schema.name !== "string") {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the name of a class to be a string.");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (typeof schema.label !== "string") {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the label of a class to be a string.");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (typeof schema.description !== "string") {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the description of a class to be a string.");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (typeof schema.version !== "string") {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the version of a class to be a string.");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (schema.decorators != null &amp;&amp; !_Array2.default.isArray(schema.decorators)) {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Expected the decorators of a class to be an array.");</span>
+            }
+        }
+    }, {
+        key: "getValidatorBySchema",
+        value: <span class="fstat-no" title="function not covered" >function getValidatorBySchema(schema) {</span>
+<span class="cstat-no" title="statement not covered" >            if (typeof schema === "string") {</span>
+<span class="cstat-no" title="statement not covered" >                return types[schema];</span>
+            } else <span class="cstat-no" title="statement not covered" >if ((typeof schema === "undefined" ? "undefined" : _typeof(schema)) === "object" &amp;&amp; schema != null) {</span>
+<span class="cstat-no" title="statement not covered" >                return types[schema.type];</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                throw new Error("Unsupported type.");</span>
+            }
+        }
+    }, {
+        key: "validateAsync",
+        value: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(<span class="fstat-no" title="function not covered" >function _callee3() {</span>
+<span class="cstat-no" title="statement not covered" >                var _this2 = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var schema, value, decorators, _iteratorNormalCompletion4, _didIteratorError4, _iteratorError4, _iterator4, _step4, decoratorInformation, decorator, _iteratorNormalCompletion5, _didIteratorError5, _iteratorError5, _iterator5, _step5, _decorator2;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return regeneratorRuntime.wrap(<span class="fstat-no" title="function not covered" >function _callee3$(_context3) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    while (1) {</span>
+<span class="cstat-no" title="statement not covered" >                        switch (_context3.prev = _context3.next) {</span>
+                            case 0:
+<span class="cstat-no" title="statement not covered" >                                schema = this.schema;</span>
+<span class="cstat-no" title="statement not covered" >                                value = this.value;</span>
+<span class="cstat-no" title="statement not covered" >                                decorators = [];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!(schema.type === "class")) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context3.next = 63;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                this.assertSchema();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                _context3.next = 7;</span>
+<span class="cstat-no" title="statement not covered" >                                return this.assertPropertiesAsync();</span>
+&nbsp;
+                            case 7:
+<span class="cstat-no" title="statement not covered" >                                if (!_Array2.default.isArray(schema.decorators)) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context3.next = 63;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                schema.decorators.forEach(<span class="fstat-no" title="function not covered" >function (decorator) {</span></span>
+<span class="cstat-no" title="statement not covered" >                                    _this2.assertDecorator(decorator);</span>
+                                });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                _iteratorNormalCompletion4 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _didIteratorError4 = false;</span>
+<span class="cstat-no" title="statement not covered" >                                _iteratorError4 = undefined;</span>
+<span class="cstat-no" title="statement not covered" >                                _context3.prev = 12;</span>
+<span class="cstat-no" title="statement not covered" >                                _iterator4 = property.decorators[Symbol.iterator]();</span>
+&nbsp;
+                            case 14:
+<span class="cstat-no" title="statement not covered" >                                if (_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context3.next = 23;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                decoratorInformation = _step4.value;</span>
+<span class="cstat-no" title="statement not covered" >                                _context3.next = 18;</span>
+<span class="cstat-no" title="statement not covered" >                                return this.environment.getDecoratorAsync(decoratorInformation);</span>
+&nbsp;
+                            case 18:
+<span class="cstat-no" title="statement not covered" >                                decorator = _context3.sent;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                decorators.push(decorator);</span>
+&nbsp;
+                            case 20:
+<span class="cstat-no" title="statement not covered" >                                _iteratorNormalCompletion4 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _context3.next = 14;</span>
+<span class="cstat-no" title="statement not covered" >                                break;</span>
+&nbsp;
+                            case 23:
+<span class="cstat-no" title="statement not covered" >                                _context3.next = 29;</span>
+<span class="cstat-no" title="statement not covered" >                                break;</span>
+&nbsp;
+                            case 25:
+<span class="cstat-no" title="statement not covered" >                                _context3.prev = 25;</span>
+<span class="cstat-no" title="statement not covered" >                                _context3.t0 = _context3["catch"](12);</span>
+<span class="cstat-no" title="statement not covered" >                                _didIteratorError4 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _iteratorError4 = _context3.t0;</span>
+&nbsp;
+                            case 29:
+<span class="cstat-no" title="statement not covered" >                                _context3.prev = 29;</span>
+<span class="cstat-no" title="statement not covered" >                                _context3.prev = 30;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_iteratorNormalCompletion4 &amp;&amp; _iterator4.return) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _iterator4.return();</span>
+                                }
+&nbsp;
+                            case 32:
+<span class="cstat-no" title="statement not covered" >                                _context3.prev = 32;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_didIteratorError4) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context3.next = 35;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                throw _iteratorError4;</span>
+&nbsp;
+                            case 35:
+<span class="cstat-no" title="statement not covered" >                                return _context3.finish(32);</span>
+&nbsp;
+                            case 36:
+<span class="cstat-no" title="statement not covered" >                                return _context3.finish(29);</span>
+&nbsp;
+                            case 37:
+<span class="cstat-no" title="statement not covered" >                                _iteratorNormalCompletion5 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _didIteratorError5 = false;</span>
+<span class="cstat-no" title="statement not covered" >                                _iteratorError5 = undefined;</span>
+<span class="cstat-no" title="statement not covered" >                                _context3.prev = 40;</span>
+<span class="cstat-no" title="statement not covered" >                                _iterator5 = decorators[Symbol.iterator]();</span>
+&nbsp;
+                            case 42:
+<span class="cstat-no" title="statement not covered" >                                if (_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context3.next = 49;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                _decorator2 = _step5.value;</span>
+<span class="cstat-no" title="statement not covered" >                                _context3.next = 46;</span>
+<span class="cstat-no" title="statement not covered" >                                return _decorator2.validateAsync({</span>
+                                    schema: schema,
+                                    value: value
+                                });
+&nbsp;
+                            case 46:
+<span class="cstat-no" title="statement not covered" >                                _iteratorNormalCompletion5 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _context3.next = 42;</span>
+<span class="cstat-no" title="statement not covered" >                                break;</span>
+&nbsp;
+                            case 49:
+<span class="cstat-no" title="statement not covered" >                                _context3.next = 55;</span>
+<span class="cstat-no" title="statement not covered" >                                break;</span>
+&nbsp;
+                            case 51:
+<span class="cstat-no" title="statement not covered" >                                _context3.prev = 51;</span>
+<span class="cstat-no" title="statement not covered" >                                _context3.t1 = _context3["catch"](40);</span>
+<span class="cstat-no" title="statement not covered" >                                _didIteratorError5 = true;</span>
+<span class="cstat-no" title="statement not covered" >                                _iteratorError5 = _context3.t1;</span>
+&nbsp;
+                            case 55:
+<span class="cstat-no" title="statement not covered" >                                _context3.prev = 55;</span>
+<span class="cstat-no" title="statement not covered" >                                _context3.prev = 56;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_iteratorNormalCompletion5 &amp;&amp; _iterator5.return) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _iterator5.return();</span>
+                                }
+&nbsp;
+                            case 58:
+<span class="cstat-no" title="statement not covered" >                                _context3.prev = 58;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                if (!_didIteratorError5) {</span>
+<span class="cstat-no" title="statement not covered" >                                    _context3.next = 61;</span>
+<span class="cstat-no" title="statement not covered" >                                    break;</span>
+                                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                throw _iteratorError5;</span>
+&nbsp;
+                            case 61:
+<span class="cstat-no" title="statement not covered" >                                return _context3.finish(58);</span>
+&nbsp;
+                            case 62:
+<span class="cstat-no" title="statement not covered" >                                return _context3.finish(55);</span>
+&nbsp;
+                            case 63:
+                            case "end":
+<span class="cstat-no" title="statement not covered" >                                return _context3.stop();</span>
+                        }
+                    }
+                }, _callee3, this, [[12, 25, 29, 37], [30,, 32, 36], [40, 51, 55, 63], [56,, 58, 62]]);
+            }));
+&nbsp;
+<span class="fstat-no" title="function not covered" >            function validateAsync() {</span>
+<span class="cstat-no" title="statement not covered" >                return _ref4.apply(this, arguments);</span>
+            }
+&nbsp;
+            return validateAsync;
+        }()
+    }]);
+&nbsp;
+    return Class;
+}();
+&nbsp;
+exports.default = Class;
+//# sourceMappingURL=Class.js.map</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Aug 04 2018 12:03:06 GMT-0600 (MDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
